@@ -28,6 +28,7 @@
             try {
                     pstBillMain.insertExc(billMain);
                 } catch (Exception e) {
+                    throw e;
                 }
             
             %> </h1>

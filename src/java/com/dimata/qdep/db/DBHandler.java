@@ -1,24 +1,16 @@
 package com.dimata.qdep.db;
 
-import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.Format;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
-import java.lang.reflect.*;
-import java.util.*;
-
 import com.dimata.qdep.db.*;
-import com.dimata.util.LogicParser;
 
 public class DBHandler implements I_DBType {
 
@@ -52,10 +44,9 @@ public class DBHandler implements I_DBType {
     protected static String dbSQLIntegerFormat = "#";
     protected static int dbMinConn = 2;
     protected static int dbMaxConn = 5;
-    
+
     //update by satrya 2014-02-14
     //protected static String locationMesin = "01";
-     
     public static boolean configLoaded = false;
     public static DBConfigReader cnfReader;// = new DBConfigReader(CONFIG_FILE);
     private String tableName;
@@ -106,7 +97,6 @@ public class DBHandler implements I_DBType {
             }
         }
 
-
         keyValues = new int[keyCount];
         keyIndex = new int[keyCount];
 
@@ -118,7 +108,6 @@ public class DBHandler implements I_DBType {
                 keyIndex[l++] = k;
             }
         }
-
 
         int i1 = 0;
         for (int j1 = 0; j1 < numbOfFields; j1++) {
@@ -189,7 +178,8 @@ public class DBHandler implements I_DBType {
                 throw new DBException(null, DBException.CONFIG_ERROR);
             }
         }
-    }   
+    }
+
     protected static void loadConfig()
             throws DBException {
         if (!configLoaded) {
@@ -203,7 +193,7 @@ public class DBHandler implements I_DBType {
                 dbUrl = configReader.getConfigValue("dburl");
                 dbUser = configReader.getConfigValue("dbuser");
                 dbPwd = configReader.getConfigValue("dbpasswd");
-                
+
                 //update by satrya 2014-02-14
                 //locationMesin = configReader.getConfigValue("stationmesin");
                 // Set the minimum and maximum connection
@@ -234,7 +224,6 @@ public class DBHandler implements I_DBType {
                     decimalFormat = configValue;
                 }
 
-
                 configValue = configReader.getConfigValue("forcurrency");
                 if (configValue != null && !configValue.equals("")) {
                     currencyFormat = configValue;
@@ -247,7 +236,7 @@ public class DBHandler implements I_DBType {
                 System.out.println("\t dbDriver : " + dbDriver);
                 System.out.println("\t dbUrl    : " + dbUrl);
                 System.out.println("\t dbUser   : " + dbUser);
-                
+
                 //update by satrya 2014-02-14
                 //System.out.println("\t No Mesin   : " + locationMesin);
                 System.out.println("\t dbPwd    : *************");
@@ -351,7 +340,6 @@ public class DBHandler implements I_DBType {
             //System.out.println("delete sql : " + getDeleteSQL());
             statement.executeUpdate(getDeleteSQL());
 
-
         } catch (SQLException sqlexception) {
             sqlexception.printStackTrace(System.err);
             throw new DBException(this, sqlexception);
@@ -428,7 +416,7 @@ public class DBHandler implements I_DBType {
             Connection connection = connPool.getConnection();
             //dbLog.info("Connected to database: " + dbUrl + " using connection no. " + connPool.idOfConnection(connection));
             return connection;
-        } catch (Exception exception) {                        
+        } catch (Exception exception) {
             System.out.println("Exc. DB Handler getConnection");
             //exception.printStackTrace(System.err);
         }
@@ -519,11 +507,11 @@ public class DBHandler implements I_DBType {
     public double getdouble(int i)
             throws DBException {
         try {
-           // NumberFormat numberformat = NumberFormat.getNumberInstance();
+            // NumberFormat numberformat = NumberFormat.getNumberInstance();
             //Number number = (Double) numberformat.parse(getObject(i).toString());
-            return getObject(i)==null ? 0.0d : (double) Double.parseDouble(getObject(i).toString()); //(double) number.doubleValue();
-        //} catch (ParseException parseexception) {
-          //  parseexception.printStackTrace(System.err);
+            return getObject(i) == null ? 0.0d : (double) Double.parseDouble(getObject(i).toString()); //(double) number.doubleValue();
+            //} catch (ParseException parseexception) {
+            //  parseexception.printStackTrace(System.err);
         } catch (Exception exception) {
             exception.printStackTrace(System.err);
         }
@@ -536,7 +524,7 @@ public class DBHandler implements I_DBType {
             //NumberFormat numberformat = NumberFormat.getNumberInstance();
             //Number number = (Float) numberformat.parse(getObject(i).toString());            
             //Float number = (Float) getObject(i);
-            return  getObject(i)==null ? 0.0f : (float) Float.parseFloat(getObject(i).toString());// number.floatValue();
+            return getObject(i) == null ? 0.0f : (float) Float.parseFloat(getObject(i).toString());// number.floatValue();
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
@@ -754,10 +742,8 @@ public class DBHandler implements I_DBType {
                         s = decimalformat.format(((Number) fieldValues.elementAt(i)).doubleValue());
 
                         //System.out.println(" ------decimal format : "+s);
-
                     }
                     break;
-
 
             }
             return s;
@@ -882,19 +868,18 @@ public class DBHandler implements I_DBType {
         return byte0;
     }
 
-     /**
-     * Untuk melakukan generate Sysntak Insert
-     * create by satrya 2014-08-18
+    /**
+     * Untuk melakukan generate Sysntak Insert create by satrya 2014-08-18
+     *
      * @param OID
      * @return
-     * @throws DBException 
+     * @throws DBException
      */
-    
     public String getInsertQuery()
             throws DBException {
         Connection connection = null;
         //Statement statement = null;
-        String sql="";
+        String sql = "";
         try {
             connection = getConnection();
             //statement = getStatement(connection);
@@ -903,23 +888,23 @@ public class DBHandler implements I_DBType {
             }
             // System.out.println(" Insert ssql : " + getInsertSQL());
             //dbLog.info("Execute updateSQL: " + getInsertSQL());
-            sql =(getInsertSQL());
+            sql = (getInsertSQL());
             hasData = true;
         } catch (Exception sqlexception) {
             sqlexception.printStackTrace(System.err);
             throw new DBException(this, sqlexception);
         } finally {
-           // closeStatement(statement);
+            // closeStatement(statement);
             closeConnection(connection);
         }
         return sql;
     }
-    
+
     public String SyntacInsert(long OID)
             throws DBException {
         Connection connection = null;
         //Statement statement = null;
-        String sql="";
+        String sql = "";
         try {
             connection = getConnection();
             //statement = getStatement(connection);
@@ -928,18 +913,18 @@ public class DBHandler implements I_DBType {
             }
             // System.out.println(" Insert ssql : " + getInsertSQL());
             //dbLog.info("Execute updateSQL: " + getInsertSQL());
-            sql =(getInsertSQL());
+            sql = (getInsertSQL());
             hasData = true;
         } catch (Exception sqlexception) {
             sqlexception.printStackTrace(System.err);
             throw new DBException(this, sqlexception);
         } finally {
-           // closeStatement(statement);
+            // closeStatement(statement);
             closeConnection(connection);
         }
         return sql;
     }
-    
+
     protected boolean isIdentity(int i) {
         return (fieldTypes[i] & TYPE_ID) != 0;
     }
@@ -1110,7 +1095,6 @@ public class DBHandler implements I_DBType {
             throws DBException {
 
         //System.out.println("-- DBHandler : "+doubleVal);
-
         setObject(i, new Double(doubleVal));
     }
 
@@ -1190,17 +1174,17 @@ public class DBHandler implements I_DBType {
     }
 
     /**
-     * Untuk melakukan generate Sysntak Update
-     * create by satrya 2014-08-18
+     * Untuk melakukan generate Sysntak Update create by satrya 2014-08-18
+     *
      * @param OID
      * @return
-     * @throws DBException 
+     * @throws DBException
      */
     public String SyntacUpdate()
             throws DBException {
         Connection connection = null;
         //Statement statement = null;
-        String sql="";
+        String sql = "";
         if (!hasData) {
             throw new DBException(this, DBException.NOT_OPEN);
         }
@@ -1210,21 +1194,21 @@ public class DBHandler implements I_DBType {
         try {
             connection = getConnection();
             //statement = getStatement(connection);
-           
+
             // System.out.println(" Insert ssql : " + getInsertSQL());
             //dbLog.info("Execute updateSQL: " + getInsertSQL());
-            sql =(getUpdateSQL());
+            sql = (getUpdateSQL());
             hasData = true;
         } catch (Exception sqlexception) {
             sqlexception.printStackTrace(System.err);
             throw new DBException(this, sqlexception);
         } finally {
-           // closeStatement(statement);
+            // closeStatement(statement);
             closeConnection(connection);
         }
         return sql;
     }
-    
+
     public String getDBTableName() {
         return tableName;
     }
@@ -1270,8 +1254,7 @@ public class DBHandler implements I_DBType {
     }
 
     /**
-     *      DENGEROUS....!!!
-     *      Delete this fuction in next dev
+     * DENGEROUS....!!! Delete this fuction in next dev
      */
     public static ResultSet execQuery(String sql)
             throws DBException {
@@ -1394,8 +1377,7 @@ public class DBHandler implements I_DBType {
     }
 
     /**
-     *      DENGEROUS....!!!
-     *      Delete this fuction in next dev
+     * DENGEROUS....!!! Delete this fuction in next dev
      */
     public static PreparedStatement getPreparedStatement(String sql, Connection connection)
             throws DBException {
@@ -1415,8 +1397,7 @@ public class DBHandler implements I_DBType {
     }
 
     /**
-     *      DENGEROUS....!!!
-     *      Delete this fuction in next dev
+     * DENGEROUS....!!! Delete this fuction in next dev
      */
     public static Connection getDBConnection() {
         try {
@@ -1448,10 +1429,11 @@ public class DBHandler implements I_DBType {
 
     //
     /**
-     * KETERANGAN :  convert java.sql.Date to java.util.Date
+     * KETERANGAN : convert java.sql.Date to java.util.Date
+     *
      * @param date
      * @param time
-     * @return 
+     * @return
      */
     public static java.util.Date convertDate(java.sql.Date date, java.sql.Time time) {
         if (date != null && time != null) {
@@ -1472,11 +1454,13 @@ public class DBHandler implements I_DBType {
             return null;
         }
     }
+
     /**
-     * Keterangan: merubah java.sql.date menjadi java.util.date
-     * create by satrya 2013-05-21
+     * Keterangan: merubah java.sql.date menjadi java.util.date create by satrya
+     * 2013-05-21
+     *
      * @param date
-     * @return 
+     * @return
      */
     public static java.util.Date convertDate(java.sql.Date date) {
         if (date != null) {
@@ -1487,9 +1471,9 @@ public class DBHandler implements I_DBType {
             java.util.Date dt = new java.util.Date(date.getYear(), date.getMonth(), date.getDate(),
                     time.getHours(), time.getMinutes(), time.getSeconds());
             return dt;
-        } 
-            return null;
         }
+        return null;
+    }
     /**
      * modified by gedhy
      */
@@ -1517,13 +1501,14 @@ public class DBHandler implements I_DBType {
         }
         return result;
     }
-    
-     /**
-     * create by satrya 2014-03-03
-     * keterangan: melakukan insert id yg sudah ada, ini di pakai sewaktu transfer
+
+    /**
+     * create by satrya 2014-03-03 keterangan: melakukan insert id yg sudah ada,
+     * ini di pakai sewaktu transfer
+     *
      * @param OID
      * @return
-     * @throws DBException 
+     * @throws DBException
      */
     public int insert(long OID)
             throws DBException {
@@ -1550,27 +1535,27 @@ public class DBHandler implements I_DBType {
         return byte0;
     }
 
-
     public void updateTran(Connection connection)
             throws DBException {
-        if (!hasData)
+        if (!hasData) {
             throw new DBException(this, DBException.NOT_OPEN);
-        if (!recordModified)
+        }
+        if (!recordModified) {
             return;
+        }
         Statement statement = null;
         try {
             statement = getStatement(connection);
-            System.out.println("Update Trans :::::::::::: "+getUpdateSQL());
+            System.out.println("Update Trans :::::::::::: " + getUpdateSQL());
             statement.executeUpdate(getUpdateSQL());
         } catch (SQLException sqlexception) {
             sqlexception.printStackTrace(System.err);
             throw new DBException(this, sqlexception);
         } finally {
-	   closeStatement(statement);
+            closeStatement(statement);
         }
     }
-   
-    
+
     public static void delete(String delSQL)
             throws DBException {
         //if (!hasData)
@@ -1582,34 +1567,36 @@ public class DBHandler implements I_DBType {
             connection = getConnection();
             //checkConcurrency(connection);
             statement = getStatement(connection);
-	    //System.out.println("DELETE =====> "+getDeleteSQL());
+            //System.out.println("DELETE =====> "+getDeleteSQL());
             statement.executeUpdate(delSQL);
         } catch (SQLException sqlexception) {
             sqlexception.printStackTrace(System.err);
-            throw new DBException(new DBHandler() , sqlexception);
+            throw new DBException(new DBHandler(), sqlexception);
         } finally {
             closeStatement(statement);
             closeConnection(connection);
         }
-    }    
-    
- public void deleteTran(Connection objConnection) throws  DBException{
-	Statement statement = null;
-	Connection connection = null;
-	try{
-	    connection = objConnection;
-	    statement = getStatement(connection);
-	    //System.out.println("Delete Trans :::: "+getDeleteSQL());
-	    int iResult = statement.executeUpdate(getDeleteSQL());
-	}catch(Exception e){}
     }
-   public int insertWO(java.util.Date date) 
+
+    public void deleteTran(Connection objConnection) throws DBException {
+        Statement statement = null;
+        Connection connection = null;
+        try {
+            connection = objConnection;
+            statement = getStatement(connection);
+            //System.out.println("Delete Trans :::: "+getDeleteSQL());
+            int iResult = statement.executeUpdate(getDeleteSQL());
+        } catch (Exception e) {
+        }
+    }
+
+    public int insertWO(java.util.Date date)
             throws DBException {
         Connection connection = null;
         Statement statement = null;
         byte byte0 = -1;
-        try { 
-          //System.out.println("Entering insert : " + getInsertSQL());
+        try {
+            //System.out.println("Entering insert : " + getInsertSQL());
             connection = getConnection();
             statement = getStatement(connection);
             String stDate = getStringDate(date);
@@ -1627,49 +1614,49 @@ public class DBHandler implements I_DBType {
             closeConnection(connection);
         }
         return byte0;
-    }  
-    
-   
-     private String getStringDate(java.util.Date date){
+    }
+
+    private String getStringDate(java.util.Date date) {
         String stDMY = "";
-        if(date != null){
-            try{
+        if (date != null) {
+            try {
                 String stDate = "";
                 String stMonth = "";
                 String stYear = String.valueOf(date.getYear() + 1900);
-                if((date.getDate() < 10)||((date.getMonth() + 1) < 10)){
-                    stDate = "0"+String.valueOf(date.getDate());
-                    stMonth = "0"+String.valueOf(date.getMonth() + 1);
-                }else{
+                if ((date.getDate() < 10) || ((date.getMonth() + 1) < 10)) {
+                    stDate = "0" + String.valueOf(date.getDate());
+                    stMonth = "0" + String.valueOf(date.getMonth() + 1);
+                } else {
                     stDate = String.valueOf(date.getDate());
                     stMonth = String.valueOf(date.getMonth() + 1);
                 }
                 stDMY = stYear + stMonth + stDate;
-                
-            }catch(Exception e){
+
+            } catch (Exception e) {
                 stDMY = "";
-                System.out.println("Exception on getDate() ::: "+e.toString());
+                System.out.println("Exception on getDate() ::: " + e.toString());
             }
         }
         return stDMY;
     }
-     
-    public static java.util.Date convertTimeToDate(java.sql.Time dTime){
+
+    public static java.util.Date convertTimeToDate(java.sql.Time dTime) {
         java.util.Date dDate = new java.util.Date();
-        try{
-          if(dTime==null){
-              return null;
-          } else {
-              dDate.setHours(dTime.getHours());
-              dDate.setMinutes(dTime.getMinutes());
-              dDate.setSeconds(dTime.getSeconds());
-          } 
-          
-        } catch(Exception e) {
-            
+        try {
+            if (dTime == null) {
+                return null;
+            } else {
+                dDate.setHours(dTime.getHours());
+                dDate.setMinutes(dTime.getMinutes());
+                dDate.setSeconds(dTime.getSeconds());
+            }
+
+        } catch (Exception e) {
+
         }
         return dDate;
-    } 
+    }
+
     /* Update by Hendra Putu | 2016-05-24 */
     public static int updateParsial(String sql) {
         DBResultSet dbrs = null;
@@ -1685,6 +1672,6 @@ public class DBHandler implements I_DBType {
         }
         return status;
     }
-     
+
 } // end of DBHandler
 

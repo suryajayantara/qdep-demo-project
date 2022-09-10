@@ -4,6 +4,17 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/web/index.jsp</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/web/WEB-INF/web.xml</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/src/java/com/dimata/qdep_cashier_demo/entity/BillMain.java</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/src/java/com/dimata/qdep/db/DBConfigReader.java</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/src/java/com/dimata/util/Formater.java</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/src/java/com/dimata/qdep_cashier_demo/entity/BillDetail.java</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/src/java/com/env.xml</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/src/java/com/dimata/qdep/entity/Entity.java</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/src/java/com/dimata/util/DateCalc.java</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/src/java/com/dimata/qdep_cashier_demo/entity/PstBillMain.java</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/src/java/com/dimata/qdep/db/DBHandler.java</file>
+            <file>file:/C:/dimata-workshop/love-bali/qdep-starting-project/web/WEB-INF/lib/env.xml</file>
         </group>
     </open-files>
 </project-private>
