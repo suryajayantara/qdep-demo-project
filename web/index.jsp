@@ -4,6 +4,7 @@
     Author     : suryajayantara
 --%>
 
+
 <%@page import="java.util.Date"%>
 <%@page import="com.dimata.qdep_cashier_demo.entity.PstBillMain"%>
 <%@page import="com.dimata.qdep_cashier_demo.entity.BillMain"%>
@@ -19,18 +20,21 @@
         <h1> <% 
                 
             BillMain billMain = new BillMain();
-            billMain.setBillDate(new Date());
+            
             billMain.setBillNumber("123");
             billMain.setCashierId(1);
-
+            billMain.setBillDate(new Date());
             PstBillMain pstBillMain = new PstBillMain();
-            
-            try {
-                    pstBillMain.insertExc(billMain);
-                } catch (Exception e) {
-                    throw e;
-                }
-            
+//            
+//            try {
+//                    pstBillMain.insertExc(billMain);
+//                } catch (Exception e) {
+//                    throw e;
+//                }
+//            
             %> </h1>
+            
+            
+            <div> </div>
     </body>
 </html>

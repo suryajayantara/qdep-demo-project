@@ -151,6 +151,21 @@ public class PstBillMain extends DBHandler implements I_DBInterface, I_DBType, I
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public static BillMain fetchExt(long oid) throws Exception {
+        try {
+            BillMain billmain = new BillMain();
+            PstBillMain pstBillMain = new PstBillMain();
+            billmain.setOID(oid);
+            billmain.setBillDate(pstBillMain.getDate(FLD_BILL_DATE));
+            billmain.setBillNumber(pstBillMain.getString(FLD_BILL_NUMBER));
+            return billmain;
+        } catch (DBException dbe) {
+            throw dbe;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     /*
             Update Method [DB Interface]
 
@@ -158,7 +173,24 @@ public class PstBillMain extends DBHandler implements I_DBInterface, I_DBType, I
      */
     @Override
     public long updateExc(Entity ent) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return updateExc((BillDetail) ent);
+    }
+
+    public long updateExc(BillMain billMain) throws DBException {
+        try {
+            if (billMain.getOID() != 0) {
+                PstBillMain pstBillMain = new PstBillMain(billMain.getOID());
+                pstBillMain.setDate(FLD_BILL_DATE, billMain.getBillDate());
+                pstBillMain.update();
+                return billMain.getOID();
+            }
+        } catch (DBException dbe) {
+            throw dbe;
+        } catch (Exception e) {
+            throw new DBException(new PstBillMain(0), DBException.UNKNOWN);
+        }
+        return 0;
+
     }
 
     /*
@@ -169,11 +201,22 @@ public class PstBillMain extends DBHandler implements I_DBInterface, I_DBType, I
      */
     @Override
     public long deleteExc(Entity ent) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (ent == null) {
+            throw new DBException(this, DBException.RECORD_NOT_FOUND);
+        }
+        return deleteExc(ent.getOID());
     }
 
     public long deleteExc(long oid) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            PstBillMain pstBillMain = new PstBillMain(oid);
+            pstBillMain.delete();
+        } catch (DBException dbe) {
+            throw dbe;
+        } catch (Exception e) {
+            throw new DBException(new PstBillMain(0), DBException.UNKNOWN);
+        }
+        return oid;
     }
 
     /*
