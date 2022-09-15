@@ -10,4 +10,5 @@ public interface I_PersintentExc
   	public long updateExc(Entity ent) throws Exception;
 	public long deleteExc(Entity ent) throws Exception;
 	public long insertExc(Entity ent) throws Exception;
+        
 }

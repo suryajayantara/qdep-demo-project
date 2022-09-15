@@ -11,6 +11,7 @@ import com.dimata.qdep.db.I_DBInterface;
 import com.dimata.qdep.db.I_DBType;
 import com.dimata.qdep.entity.Entity;
 import com.dimata.qdep.entity.I_PersintentExc;
+import java.util.Vector;
 
 /**
  *
@@ -150,8 +151,9 @@ public class PstBillMain extends DBHandler implements I_DBInterface, I_DBType, I
     public long fetchExc(Entity ent) throws Exception {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    public static BillMain fetchExt(long oid) throws Exception {
+    
+    // Fetch itu ambil satu data
+    public static BillMain fetchExc(long oid) throws Exception {
         try {
             BillMain billmain = new BillMain();
             PstBillMain pstBillMain = new PstBillMain();
@@ -165,6 +167,9 @@ public class PstBillMain extends DBHandler implements I_DBInterface, I_DBType, I
             throw e;
         }
     }
+    
+   
+
 
     /*
             Update Method [DB Interface]
